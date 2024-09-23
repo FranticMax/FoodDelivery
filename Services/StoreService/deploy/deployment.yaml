@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: store-service-deployment
+spec:
+  selector:
+    matchLabels:
+      app: store-service
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: store-service
+    spec:
+      containers:
+        - name: store-service
+          image: franticmax/food-delivery-store-service:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: store-service-secret
+                  key: POSTGRES_PASSWORD
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: store-service-secret
+                  key: POSTGRES_DB
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: store-service-secret
+                  key: POSTGRES_USER
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: store-service-secret
+                  key: POSTGRES_PORT
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: store-service-secret
+                  key: POSTGRES_HOST

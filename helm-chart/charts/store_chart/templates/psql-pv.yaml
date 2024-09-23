@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+    name: {{ .Release.Name }}-{{ .Values.postgres.name }}-pv
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 128Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data"

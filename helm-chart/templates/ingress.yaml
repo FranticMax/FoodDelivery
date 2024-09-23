@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: {{ .Release.Name }}-{{ .Values.app.name }}-ingress
+    labels:
+      app: ingress-nginx
+    annotations:
+      nginx.ingress.kubernetes.io/use-regex: "true"
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+    ingressClassName: nginx
+    rules:
+      - host: {{ .Values.app.host }}
+        http:
+          paths:
+            - path: /store-service(/|$)(.*)
+              pathType: ImplementationSpecific
+              backend:
+                service:
+                  name: {{ .Release.Name }}-{{ .Values.store_chart.app.name }}-service
+                  port:
+                    number: {{ .Values.store_chart.app.port }}

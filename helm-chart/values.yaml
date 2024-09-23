@@ -1,0 +1,14 @@
+app:
+  host: arch.homework
+  name: food-delivery
+store_chart:
+  app:
+    name: store
+    port: 8080
+    replicas: 2
+    image: franticmax/food-delivery-store-service:1.0.6
+prometheus_chart:
+  app:
+    name: prometheus
+    targets:
+      store: store

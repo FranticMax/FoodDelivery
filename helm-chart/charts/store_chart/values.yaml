@@ -1,0 +1,10 @@
+app:
+  host: arch.homework
+  port: 8080
+  name: store-service
+  replicas: 2
+  image: franticmax/food-delivery-store-service:1.0.1
+postgres:
+  name: store-psql
+  port: 5432
+  image: postgres:latest

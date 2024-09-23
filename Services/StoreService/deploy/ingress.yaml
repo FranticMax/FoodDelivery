@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: store-service-ingress
+    labels:
+      app: ingress-nginx
+spec:
+    ingressClassName: nginx
+    rules:
+      - host: arch.homework
+        http:
+          paths:
+            - path: /
+              pathType: Prefix
+              backend:
+                service:
+                  name: store
+                  port:
+                    number: 8080

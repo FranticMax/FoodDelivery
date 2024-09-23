@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-{{ .Values.app.name }}-configmap
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 30s
+    scrape_configs:
+      - job_name: 'store-service'
+        static_configs:
+          - targets: ['{{ .Release.Name }}-{{ .Values.app.targets.store }}-service:8080']
